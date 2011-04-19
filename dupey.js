@@ -32,7 +32,7 @@
  *   Author:
  *   	- Amadeus Demarzi
  *
-*/
+ */
 
 var codez = 'You will not find any dupes here'.split(' '),
 	testee,
