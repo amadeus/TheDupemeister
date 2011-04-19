@@ -28,8 +28,6 @@
  *   revised law that (1) expands the statement "fullest extent of the law" to encompass
  *   an infinite duration of infinite punishments and (2) exacts said punishments
  *   upon all parties (related or non-related).
- *
- *   Read more: http://forums.kffl.com/threads/270305-World-s-worst-software-license?s=e1b274fc725c251b267d9b4930268063#ixzz1JvMv0Xjt
  *   
  *   Author:
  *   	- Amadeus Demarzi
