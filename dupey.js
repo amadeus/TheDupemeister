@@ -34,16 +34,13 @@
  *
 */
 
-var codez = 'my stupid check for dupes code'.split(' '),
+var codez = 'You will not find any dupes here'.split(' '),
 	testee,
 	matches = [],
 	fn = function(toTest){
 		if (testee === toTest) matches.push(toTest);
 	};
 
-while (codez.length > 0) {
-	testee = codez.shift();
-	codez.forEach(fn);
-}
+while ((testee = codez.shift())) codez.forEach(fn);
 
 console.log(matches);
