@@ -68,15 +68,16 @@ var fs = require('fs'),
 
 		console.log('Number of dupes: %s', matchList.length);
 
-		// Generate clean array and setup dupe stats
-		for (var name in matchStore) {
-			cleanList.push(name);
-			if (matchStore[name] === 0) delete matchStore[name];
-		}
-
 		if (matchList.length) {
+			// Generate clean array and setup dupe stats
+			for (var name in matchStore) {
+				cleanList.push(name);
+				if (matchStore[name] === 0) delete matchStore[name];
+			}
+
 			fs.writeFile(process.argv[3], cleanList.join(',\n'));
 			console.log('Individual Dupe Stats: \n', matchStore);
+			console.log('Clean CSV written to: %s', process.argv[3]);
 		}
 		else console.log('The Dupemeister is very angry that you disturbed him.');
 
