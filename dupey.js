@@ -28,19 +28,62 @@
  *   revised law that (1) expands the statement "fullest extent of the law" to encompass
  *   an infinite duration of infinite punishments and (2) exacts said punishments
  *   upon all parties (related or non-related).
- *   
+ *
  *   Author:
  *   	- Amadeus Demarzi
  *
  */
+(function(){
 
-var codez = 'You will not find any dupes here'.split(' '),
-	testee,
-	matches = [],
-	fn = function(toTest){
-		if (testee === toTest) matches.push(toTest);
+if (!process.argv[2] || !process.argv[3])
+	return console.log('You must specify an input and output file');
+
+var fs = require('fs'),
+	TheDupemeister = function(err, codez){
+		if (err) return console.log('Error reading file');
+
+		// Start timing The Epic Dupemeister
+		console.log('====================================\nThe Dupemeister Awakes From His Lair\n====================================');
+		console.time('The Dupemeister Was Awake For');
+
+		var testee,
+			matchList = [],
+			matchStore = {},
+			cleanList = [],
+			fn = function(toTest){
+				if (testee === toTest) {
+					matchList.push(toTest);
+					matchStore[testee]++;
+				}
+			};
+
+		// Convert CSV into an array
+		codez = codez.replace(/\n/g, '').split(',');
+
+		// Determine dupes!
+		while ((testee = codez.shift())) {
+			if (!matchStore[testee]) matchStore[testee] = 0;
+			codez.forEach(fn);
+		}
+
+		console.log('Number of dupes: %s', matchList.length);
+
+		// Generate clean array and setup dupe stats
+		for (var name in matchStore) {
+			cleanList.push(name);
+			if (matchStore[name] === 0) delete matchStore[name];
+		}
+
+		if (matchList.length) {
+			fs.writeFile(process.argv[3], cleanList.join(',\n'));
+			console.log('Individual Dupe Stats: \n', matchStore);
+		}
+		else console.log('The Dupemeister is very angry that you disturbed him.');
+
+		console.log('===================================\nThe Dupemeister Returns To His Lair\n===================================');
+		console.timeEnd('The Dupemeister Was Awake For');
 	};
 
-while ((testee = codez.shift())) codez.forEach(fn);
+fs.readFile(process.argv[2], 'utf8', TheDupemeister);
 
-console.log(matches);
+})();
