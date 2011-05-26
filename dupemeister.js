@@ -43,8 +43,8 @@ var fs = require('fs'),
 		if (err) return console.log('Error reading file');
 
 		// Start timing The Epic Dupemeister
-		console.log('====================================\nThe Dupemeister Awakes From His Lair\n====================================');
-		console.time('The Dupemeister Was Awake For');
+		console.log('\n====================================\nThe Dupemeister Awakes From His Lair\n------------------------------------');
+		console.time('\nThe Dupemeister Was Awake For');
 
 		var testee,
 			matchList = [],
@@ -81,8 +81,8 @@ var fs = require('fs'),
 		}
 		else console.log('The Dupemeister is very angry that you disturbed him.');
 
-		console.log('===================================\nThe Dupemeister Returns To His Lair\n===================================');
-		console.timeEnd('The Dupemeister Was Awake For');
+		console.log('------------------------------------\nThe Dupemeister Returns To His Lair\n====================================');
+		console.timeEnd('\nThe Dupemeister Was Awake For');
 	};
 
 fs.readFile(process.argv[2], 'utf8', TheDupemeister);
