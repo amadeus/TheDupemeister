@@ -35,7 +35,7 @@
  */
 (function(){
 
-if (!process.argv[2] || !process.argv[3])
+if (!process.argv[2])
 	return console.log('You must specify an input and output file');
 
 var fs = require('fs'),
@@ -55,10 +55,16 @@ var fs = require('fs'),
 					matchList.push(toTest);
 					matchStore[testee]++;
 				}
-			};
+			},
+			total = 0,
+			isCSV = (codez.indexOf('\n') > 0 && codez[codez.indexOf('\n') - 1] === ',' )? true : false,
+			cleanFile;
 
-		// Convert CSV into an array
-		codez = codez.replace(/\n/g, '').split(',');
+		if (isCSV) {
+			codez = codez.replace(/\n/g, '').split(',');
+			total = codez.length;
+		}
+		else codez = codez.split(/\n/g);
 
 		// Determine dupes!
 		while ((testee = codez.shift())) {
@@ -66,7 +72,7 @@ var fs = require('fs'),
 			codez.forEach(fn);
 		}
 
-		console.log('Number of dupes: %s', matchList.length);
+		console.log('Number of dupes: %s in %s', matchList.length, total);
 
 		if (matchList.length) {
 			// Generate clean array and setup dupe stats
@@ -75,9 +81,18 @@ var fs = require('fs'),
 				if (matchStore[name] === 0) delete matchStore[name];
 			}
 
-			fs.writeFile(process.argv[3], cleanList.join(',\n'));
+			// Create clean file name if non specified
+			if (process.argv[3]) cleanFile = process.argv[3];
+			else {
+				cleanFile = process.argv[2];
+				cleanFile = cleanFile.split('.');
+				cleanFile[0] += '-clean';
+				cleanFile = cleanFile.join('.');
+			}
+
+			fs.writeFile(cleanFile, cleanList.join(',\n'));
 			console.log('Individual Dupe Stats: \n', matchStore);
-			console.log('Clean CSV written to: %s', process.argv[3]);
+			console.log('Clean CSV written to: %s', cleanFile);
 		}
 		else console.log('The Dupemeister is very angry that you disturbed him.');
 
