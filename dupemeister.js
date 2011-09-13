@@ -36,7 +36,7 @@
 (function(){
 
 if (!process.argv[2])
-	return console.log('You must specify an input and output file');
+	return console.log('You need to specify a file, n00b.');
 
 var fs = require('fs'),
 	TheDupemeister = function(err, codez){
