@@ -1,3 +1,4 @@
+// jshint node:true
 /*
  *
  *   D&R (Death and Repudiation) License
@@ -57,14 +58,10 @@ var fs = require('fs'),
 				}
 			},
 			total = 0,
-			isCSV = (codez.indexOf('\n') > 0 && codez[codez.indexOf('\n') - 1] === ',' )? true : false,
 			cleanFile;
 
-		if (isCSV) {
-			codez = codez.replace(/\n/g, '').split(',');
-			total = codez.length;
-		}
-		else codez = codez.split(/\n/g);
+		codez = codez.split(/\n/g);
+		total = codez.length;
 
 		// Determine dupes!
 		while ((testee = codez.shift())) {
@@ -90,7 +87,7 @@ var fs = require('fs'),
 				cleanFile = cleanFile.join('.');
 			}
 
-			fs.writeFile(cleanFile, cleanList.join(',\n'));
+			fs.writeFile(cleanFile, cleanList.join('\n'));
 			console.log('Individual Dupe Stats: \n', matchStore);
 			console.log('Clean CSV written to: %s', cleanFile);
 		}
